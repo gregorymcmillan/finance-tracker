@@ -2,7 +2,7 @@ import { useState } from "react";
 import { auth } from "../firebase/config";
 
 export const useSignup = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
   const signup = async (
@@ -10,7 +10,7 @@ export const useSignup = () => {
     password: string,
     displayName: string
   ) => {
-    setError(""); // resets error before each signup
+    setError(false); // resets error before each signup
     setIsPending(true);
 
     try {
@@ -25,12 +25,12 @@ export const useSignup = () => {
       await res.user?.updateProfile({ displayName });
 
       setIsPending(false);
-      setError("");
+      setError(false);
     } catch (err) {
       // typeguard to check if err is an instance of 'Error'
       if (err instanceof Error) {
         console.log(err.message);
-        setError("error");
+        setError(true);
         setIsPending(false);
       } else {
         console.log("Unexpected error:", err);
