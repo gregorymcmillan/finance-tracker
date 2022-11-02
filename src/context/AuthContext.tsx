@@ -5,8 +5,9 @@ type AuthContextInterface = {
   dispatch: any;
 };
 
-type ACTIONTYPE = { type: "LOGIN"; payload: string };
-// | { type: "SIGNUP"; payload: string };
+type ACTIONTYPE =
+  | { type: "LOGIN"; payload: {} }
+  | { type: "LOGOUT"; payload: {} };
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);
 
