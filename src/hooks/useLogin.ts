@@ -14,8 +14,12 @@ export const useLogin = () => {
 
     // sign the user in
     try {
+      // login
       const res = await auth.signInWithEmailAndPassword(email, password);
+
+      // dispatch login action
       dispatch({ type: "LOGIN", payload: res.user });
+      console.log(isCancelled);
 
       if (!isCancelled) {
         setIsPending(false);
@@ -32,11 +36,12 @@ export const useLogin = () => {
   };
 
   // runs the cleanup function condition
-  useEffect(() => {
-    return () => {
-      setIsCancelled(true);
-    };
-  }, []);
+  /** @NeedsFix cleanup function not working properly because of double render in dev mode */
+  // useEffect(() => {
+  //   return () => {
+  //     setIsCancelled(true);
+  //   };
+  // }, []);
 
   return { login, error, isPending };
 };
