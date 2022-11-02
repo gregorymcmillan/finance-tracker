@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
 
 export const useSignup = () => {
+  const [isCancelled, setIsCancelled] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const { dispatch } = useAuthContext();
@@ -27,16 +28,26 @@ export const useSignup = () => {
 
       // dispatch login action
       dispatch({ type: "LOGIN", payload: res.user });
-
-      setIsPending(false);
-      setError(null);
+      if (!isCancelled) {
+        setIsPending(false);
+        setError(null);
+      }
     } catch (err: any) {
-      console.log(err.message);
-      // use 'err.code' to render custom error messages
-      setError(err.message);
-      setIsPending(false);
+      if (!isCancelled) {
+        console.log(err.message);
+        /** @ToDo use 'err.code' to render custom error messages */
+        setError(err.message);
+        setIsPending(false);
+      }
     }
   };
+
+  // runs the cleanup function condition
+  useEffect(() => {
+    return () => {
+      setIsCancelled(true);
+    };
+  }, []);
 
   return { error, isPending, signup };
 };
