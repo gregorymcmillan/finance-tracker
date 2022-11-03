@@ -73,11 +73,11 @@ export const useFirestore = (collection: any) => {
   const deleteDocument = async (id: number) => {};
 
   // cleanup function ( may not work properly because of double render)
-  useEffect(() => {
-    return () => {
-      setIsCancelled(true);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     setIsCancelled(true);
+  //   };
+  // }, []);
 
   return { addDocument, deleteDocument, response };
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFirestore";
 
 export default function TransactionForm({ uid }: any) {
@@ -15,6 +15,14 @@ export default function TransactionForm({ uid }: any) {
       amount,
     });
   };
+
+  // reset form after document successfully added
+  useEffect(() => {
+    if (response.success) {
+      setName("");
+      setAmount("");
+    }
+  }, [response.success]);
 
   return (
     <>
