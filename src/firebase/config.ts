@@ -17,8 +17,8 @@ firebase.initializeApp(firebaseConfig);
 // init service
 const projectFirestore = firebase.firestore();
 const auth = firebase.auth();
-// auth.onAuthStateChanged(user => {
-//   // Check for user status
-// });
 
-export { projectFirestore, auth };
+// timestamp
+const timestamp = firebase.firestore.Timestamp;
+
+export { projectFirestore, auth, timestamp };
